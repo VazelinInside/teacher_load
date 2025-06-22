@@ -22,7 +22,15 @@ def get_teacher_response(teacher: Teacher) -> TeacherResponse:
     )
 
 
-def get_by_id_teacher(teacher_id) -> Teacher:
+def get_by_id_teacher(teacher_id: int) -> Teacher:
     '''Получает преподавателя по его id'''
 
     return Teacher.get_by_id(teacher_id)
+
+
+def put_name_teacher(teacher: Teacher, name: str) -> Teacher:
+    '''Изменяет имя преподавателя'''
+
+    teacher.name = name
+    teacher.save()
+    return teacher
