@@ -1,3 +1,6 @@
+'''Модуль таблицы БД нагрузки'''
+
+
 from peewee import IntegerField, ForeignKeyField
 from models.base import Table
 from models.discipline import Discipline
