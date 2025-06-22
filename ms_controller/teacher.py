@@ -1,20 +1,28 @@
-from schemes.teacher import TeacherCreate, TeacherResponse
+'''Модуль перехода от модели БД к схеме запросов'''
+
+
 from models.teacher import Teacher
-from fastapi import APIRouter, status
+from schemes.teacher import TeacherCreate, TeacherResponse
 
 
-router = APIRouter(prefix="/teachers", tags=["teachers"])
+def get_or_create_teacher(teacher_create: TeacherCreate) -> Teacher:
+    '''Создает преподавателя'''
+
+    return Teacher.get_or_create(
+        name=teacher_create.name
+    )[0]
 
 
-@router.post('/', response_model=TeacherResponse,
-             status_code=status.HTTP_201_CREATED)
-async def create_teacher(teacher_data: TeacherCreate):
-    '''Создание нового преподавателя'''
-    teacher = Teacher.create(name=teacher_data.name)
+def get_teacher_response(teacher: Teacher) -> TeacherResponse:
+    '''Получение тела ответа запросов на преподавателя'''
 
-    data = TeacherResponse(
+    return TeacherResponse(
         id=teacher.id,
         name=teacher.name
     )
 
-    return data
+
+def get_by_id_teacher(teacher_id) -> Teacher:
+    '''Получает преподавателя по его id'''
+
+    return Teacher.get_by_id(teacher_id)
